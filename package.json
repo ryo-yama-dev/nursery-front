@@ -9,8 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "prettier": "prettier --write .",
-    "compile": "graphql-codegen",
-    "watch": "graphql-codegen -w"
+    "codegen": "graphql-codegen"
   },
   "dependencies": {
     "@apollo/client": "^3.8.3",
