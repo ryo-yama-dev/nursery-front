@@ -8,7 +8,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prettier": "prettier --write ."
+    "prettier": "prettier --write .",
+    "compile": "graphql-codegen",
+    "watch": "graphql-codegen -w"
   },
   "dependencies": {
     "@apollo/client": "^3.8.3",
@@ -24,6 +26,9 @@
     "tailwindcss": "3.3.3"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.0",
+    "@graphql-codegen/client-preset": "^4.1.0",
+    "@graphql-typed-document-node/core": "^3.2.0",
     "@types/node": "^20.6.0",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
@@ -32,6 +37,7 @@
     "eslint-config-prettier": "^9.0.0",
     "prettier": "3.0.3",
     "prettier-plugin-tailwindcss": "^0.5.4",
+    "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
   }
 }
