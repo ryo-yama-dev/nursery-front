@@ -1,7 +1,8 @@
 import "./globals.css"
 import type { Metadata } from "next"
+import clsx from "clsx"
 import { Inter } from "next/font/google"
-import AppProvider from "providers/ApolloProvider"
+import { ApolloProvider, ThemeProvider } from "providers"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -17,8 +18,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja">
-      <body className={inter.className}>
-        <AppProvider>{children}</AppProvider>
+      <body className={clsx(inter.className, "h-screen w-screen")}>
+        <ThemeProvider>
+          <ApolloProvider>{children}</ApolloProvider>
+        </ThemeProvider>
       </body>
     </html>
   )
