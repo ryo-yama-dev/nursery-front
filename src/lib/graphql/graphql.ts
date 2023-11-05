@@ -101,20 +101,12 @@ export type EmployeeCreateInput = {
   sex: Sex
 }
 
-/** 日次従業員記録 */
-export type EmployeeDailyRecord = {
-  __typename?: "EmployeeDailyRecord"
-  date: Scalars["Date"]["output"]
-  records: Array<EmployeeRecord>
-}
-
 /** 従業員記録 */
 export type EmployeeRecord = Record & {
   __typename?: "EmployeeRecord"
   attendTime: Scalars["Time"]["output"]
   date: Scalars["Date"]["output"]
   edited: Scalars["Boolean"]["output"]
-  employee: Employee
   employeeId: Scalars["Int"]["output"]
   id: Scalars["Int"]["output"]
   leaveTime: Scalars["Time"]["output"]
@@ -126,6 +118,12 @@ export type EmployeeRecordCreateInput = {
   date: Scalars["Date"]["input"]
   employeeId: Scalars["Int"]["input"]
   leaveTime: Scalars["Time"]["input"]
+}
+
+export type EmployeeRecordDaily = {
+  __typename?: "EmployeeRecordDaily"
+  employee: Employee
+  records: Array<Maybe<EmployeeRecord>>
 }
 
 /** 職級 */
@@ -201,8 +199,8 @@ export type Query = {
   employee?: Maybe<Employee>
   /** 従業員一覧取得 */
   employees: Array<Employee>
-  /** 従業員日次記録一覧取得 */
-  employeesMonthly: Array<EmployeeDailyRecord>
+  /** 月毎の従業員日次記録取得 */
+  employeesMonthly: Array<EmployeeRecordDaily>
   /** 職級一覧取得 */
   jobs: Array<Job>
 }
@@ -264,6 +262,7 @@ export type EmployeesQuery = {
   __typename?: "Query"
   employees: Array<{
     __typename?: "Employee"
+    id: number
     name: string
     belong: boolean
     sex: string
@@ -272,6 +271,28 @@ export type EmployeesQuery = {
       id: number
       headline: string
     }> | null
+  }>
+}
+
+export type EmployeeMonthlyQueryVariables = Exact<{
+  input: RecordsQueryInput
+}>
+
+export type EmployeeMonthlyQuery = {
+  __typename?: "Query"
+  employeesMonthly: Array<{
+    __typename?: "EmployeeRecordDaily"
+    employee: { __typename?: "Employee"; id: number; name: string }
+    records: Array<{
+      __typename?: "EmployeeRecord"
+      id: number
+      date: any
+      attendTime: any
+      leaveTime: any
+      note: string
+      edited: boolean
+      employeeId: number
+    } | null>
   }>
 }
 
@@ -317,6 +338,7 @@ export const EmployeesDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
                 { kind: "Field", name: { kind: "Name", value: "name" } },
                 { kind: "Field", name: { kind: "Name", value: "belong" } },
                 { kind: "Field", name: { kind: "Name", value: "sex" } },
@@ -342,3 +364,95 @@ export const EmployeesDocument = {
     },
   ],
 } as unknown as DocumentNode<EmployeesQuery, EmployeesQueryVariables>
+export const EmployeeMonthlyDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "EmployeeMonthly" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "input" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "RecordsQueryInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "employeesMonthly" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "input" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "input" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "employee" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                    ],
+                  },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "records" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "date" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "attendTime" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "leaveTime" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "note" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "edited" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "employeeId" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  EmployeeMonthlyQuery,
+  EmployeeMonthlyQueryVariables
+>
