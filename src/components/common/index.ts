@@ -1,5 +1,6 @@
 export * from "./button"
 export * from "./calendar"
+export * from "./dialog"
 export * from "./layout"
 export * from "./modal"
 export * from "./table"
