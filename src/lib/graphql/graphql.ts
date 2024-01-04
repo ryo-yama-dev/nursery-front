@@ -263,9 +263,14 @@ export type EmployeesQuery = {
   employees: Array<{
     __typename?: "Employee"
     id: number
+    authId?: string | null
     name: string
-    belong: boolean
     sex: string
+    belong: boolean
+    classroomId?: number | null
+    createdAt: any
+    updatedAt: any
+    job: { __typename?: "Job"; id: number; name: string; rank: number }
     profiles?: Array<{
       __typename?: "Profile"
       id: number
@@ -339,9 +344,25 @@ export const EmployeesDocument = {
               kind: "SelectionSet",
               selections: [
                 { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "authId" } },
                 { kind: "Field", name: { kind: "Name", value: "name" } },
-                { kind: "Field", name: { kind: "Name", value: "belong" } },
                 { kind: "Field", name: { kind: "Name", value: "sex" } },
+                { kind: "Field", name: { kind: "Name", value: "belong" } },
+                { kind: "Field", name: { kind: "Name", value: "classroomId" } },
+                { kind: "Field", name: { kind: "Name", value: "createdAt" } },
+                { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "job" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                      { kind: "Field", name: { kind: "Name", value: "rank" } },
+                    ],
+                  },
+                },
                 {
                   kind: "Field",
                   name: { kind: "Name", value: "profiles" },

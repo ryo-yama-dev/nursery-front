@@ -27,7 +27,7 @@ export default function ManagePage() {
   }
 
   const { data, loading, error, refetch } = useQuery(employeesMonthly, {
-    variables: { input: { year: target.year(), month: target.month() } },
+    variables: { input: { year: target.year(), month: target.month() + 1 } },
   })
 
   if (loading) return <div>loading</div>
@@ -51,7 +51,7 @@ export default function ManagePage() {
       <div className="ml-4 flex items-start">
         <div className="mr-2">
           <p>日 \ 名</p>
-          <DateList year={target.year()} month={target.month()} />
+          <DateList year={target.year()} month={target.month() + 1} />
         </div>
         {data?.employeesMonthly.map(({ employee, records }, i) => (
           <div key={i} className="flex flex-col px-2">

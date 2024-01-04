@@ -15,7 +15,7 @@ import { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/
 const documents = {
   "\n  query Classrooms {\n    classrooms {\n      age\n      name\n    }\n  }\n":
     types.ClassroomsDocument,
-  "\n  query Employees {\n    employees {\n      id\n      name\n      belong\n      sex\n      profiles {\n        id\n        headline\n      }\n    }\n  }\n":
+  "\n  query Employees {\n    employees {\n      id\n      authId\n      name\n      sex\n      belong\n      classroomId\n      createdAt\n      updatedAt\n      job {\n        id\n        name\n        rank\n      }\n      profiles {\n        id\n        headline\n      }\n    }\n  }\n":
     types.EmployeesDocument,
   "\n  query EmployeeMonthly($input: RecordsQueryInput!) {\n    employeesMonthly(input: $input) {\n      employee {\n        id\n        name\n      }\n      records {\n        id\n        date\n        attendTime\n        leaveTime\n        note\n        edited\n        employeeId\n      }\n    }\n  }\n":
     types.EmployeeMonthlyDocument,
@@ -45,8 +45,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  query Employees {\n    employees {\n      id\n      name\n      belong\n      sex\n      profiles {\n        id\n        headline\n      }\n    }\n  }\n",
-): (typeof documents)["\n  query Employees {\n    employees {\n      id\n      name\n      belong\n      sex\n      profiles {\n        id\n        headline\n      }\n    }\n  }\n"]
+  source: "\n  query Employees {\n    employees {\n      id\n      authId\n      name\n      sex\n      belong\n      classroomId\n      createdAt\n      updatedAt\n      job {\n        id\n        name\n        rank\n      }\n      profiles {\n        id\n        headline\n      }\n    }\n  }\n",
+): (typeof documents)["\n  query Employees {\n    employees {\n      id\n      authId\n      name\n      sex\n      belong\n      classroomId\n      createdAt\n      updatedAt\n      job {\n        id\n        name\n        rank\n      }\n      profiles {\n        id\n        headline\n      }\n    }\n  }\n"]
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

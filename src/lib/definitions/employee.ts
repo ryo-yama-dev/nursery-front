@@ -4,9 +4,18 @@ export const employeesQuery = graphql(`
   query Employees {
     employees {
       id
+      authId
       name
-      belong
       sex
+      belong
+      classroomId
+      createdAt
+      updatedAt
+      job {
+        id
+        name
+        rank
+      }
       profiles {
         id
         headline
