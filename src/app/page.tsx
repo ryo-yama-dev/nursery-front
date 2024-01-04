@@ -27,7 +27,7 @@ export default function TopPage() {
         <p className="py-4 text-4xl">保育園情報管理システム</p>
       </div>
       <div className="mt-4 flex items-center justify-evenly">
-        <Link href="/employee">
+        <Link href="/attend">
           <TopButton color="bg-cyan-100 hover:bg-cyan-300">勤怠登録</TopButton>
         </Link>
         <Link href="/child">

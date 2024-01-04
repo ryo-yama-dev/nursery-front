@@ -1,6 +1,11 @@
-import Comp, { OutlinedTextFieldProps as Props } from "@mui/material/TextField"
+import Comp, {
+  OutlinedTextFieldProps as Props,
+  TextFieldVariants,
+} from "@mui/material/TextField"
 
-export interface TextFieldProps extends Props {}
+export interface TextFieldProps extends Omit<Props, "variant"> {
+  variant?: TextFieldVariants
+}
 
 export const TextField = ({
   variant = "outlined",
