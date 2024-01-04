@@ -94,6 +94,7 @@ export type Employee = Timestamp & {
 }
 
 export type EmployeeCreateInput = {
+  authId: Scalars["String"]["input"]
   belong: Scalars["Boolean"]["input"]
   jobId: Scalars["Int"]["input"]
   name: Scalars["String"]["input"]
@@ -301,6 +302,32 @@ export type EmployeeMonthlyQuery = {
   }>
 }
 
+export type EmployeeCreateMutationVariables = Exact<{
+  input: EmployeeCreateInput
+}>
+
+export type EmployeeCreateMutation = {
+  __typename?: "Mutation"
+  employeeCreate: {
+    __typename?: "Employee"
+    id: number
+    authId?: string | null
+    name: string
+    sex: string
+    belong: boolean
+    classroomId?: number | null
+    createdAt: any
+    updatedAt: any
+  }
+}
+
+export type JobsQueryVariables = Exact<{ [key: string]: never }>
+
+export type JobsQuery = {
+  __typename?: "Query"
+  jobs: Array<{ __typename?: "Job"; id: number; name: string; rank: number }>
+}
+
 export const ClassroomsDocument = {
   kind: "Document",
   definitions: [
@@ -477,3 +504,91 @@ export const EmployeeMonthlyDocument = {
   EmployeeMonthlyQuery,
   EmployeeMonthlyQueryVariables
 >
+export const EmployeeCreateDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "EmployeeCreate" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "input" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "EmployeeCreateInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "employeeCreate" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "input" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "input" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "authId" } },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "sex" } },
+                { kind: "Field", name: { kind: "Name", value: "belong" } },
+                { kind: "Field", name: { kind: "Name", value: "classroomId" } },
+                { kind: "Field", name: { kind: "Name", value: "createdAt" } },
+                { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  EmployeeCreateMutation,
+  EmployeeCreateMutationVariables
+>
+export const JobsDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "Jobs" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "jobs" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "rank" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<JobsQuery, JobsQueryVariables>

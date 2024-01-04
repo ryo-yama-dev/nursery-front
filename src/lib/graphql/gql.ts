@@ -19,6 +19,10 @@ const documents = {
     types.EmployeesDocument,
   "\n  query EmployeeMonthly($input: RecordsQueryInput!) {\n    employeesMonthly(input: $input) {\n      employee {\n        id\n        name\n      }\n      records {\n        id\n        date\n        attendTime\n        leaveTime\n        note\n        edited\n        employeeId\n      }\n    }\n  }\n":
     types.EmployeeMonthlyDocument,
+  "\n  mutation EmployeeCreate($input: EmployeeCreateInput!) {\n    employeeCreate(input: $input) {\n      id\n      authId\n      name\n      sex\n      belong\n      classroomId\n      createdAt\n      updatedAt\n    }\n  }\n":
+    types.EmployeeCreateDocument,
+  "\n  query Jobs {\n    jobs {\n      id\n      name\n      rank\n    }\n  }\n":
+    types.JobsDocument,
 }
 
 /**
@@ -53,6 +57,18 @@ export function graphql(
 export function graphql(
   source: "\n  query EmployeeMonthly($input: RecordsQueryInput!) {\n    employeesMonthly(input: $input) {\n      employee {\n        id\n        name\n      }\n      records {\n        id\n        date\n        attendTime\n        leaveTime\n        note\n        edited\n        employeeId\n      }\n    }\n  }\n",
 ): (typeof documents)["\n  query EmployeeMonthly($input: RecordsQueryInput!) {\n    employeesMonthly(input: $input) {\n      employee {\n        id\n        name\n      }\n      records {\n        id\n        date\n        attendTime\n        leaveTime\n        note\n        edited\n        employeeId\n      }\n    }\n  }\n"]
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: "\n  mutation EmployeeCreate($input: EmployeeCreateInput!) {\n    employeeCreate(input: $input) {\n      id\n      authId\n      name\n      sex\n      belong\n      classroomId\n      createdAt\n      updatedAt\n    }\n  }\n",
+): (typeof documents)["\n  mutation EmployeeCreate($input: EmployeeCreateInput!) {\n    employeeCreate(input: $input) {\n      id\n      authId\n      name\n      sex\n      belong\n      classroomId\n      createdAt\n      updatedAt\n    }\n  }\n"]
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: "\n  query Jobs {\n    jobs {\n      id\n      name\n      rank\n    }\n  }\n",
+): (typeof documents)["\n  query Jobs {\n    jobs {\n      id\n      name\n      rank\n    }\n  }\n"]
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {}

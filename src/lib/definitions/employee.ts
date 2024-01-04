@@ -43,3 +43,18 @@ export const employeesMonthly = graphql(`
     }
   }
 `)
+
+export const employeeCreate = graphql(`
+  mutation EmployeeCreate($input: EmployeeCreateInput!) {
+    employeeCreate(input: $input) {
+      id
+      authId
+      name
+      sex
+      belong
+      classroomId
+      createdAt
+      updatedAt
+    }
+  }
+`)
