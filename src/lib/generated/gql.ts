@@ -27,6 +27,10 @@ const documents = {
     types.EmployeeCreateDocument,
   "\n  query Jobs {\n    jobs {\n      id\n      name\n      rank\n    }\n  }\n":
     types.JobsDocument,
+  "\n  mutation EmployeeRecordCreate($input: EmployeeRecordCreateInput!) {\n    employeeRecordCreate(input: $input) {\n      date\n      attendTime\n      leaveTime\n      employeeId\n      note\n      edited\n    }\n  }\n":
+    types.EmployeeRecordCreateDocument,
+  "\n  mutation EmployeeRecordUpdate($input: EmployeeRecordUpdateInput!) {\n    employeeRecordUpdate(input: $input) {\n      date\n      attendTime\n      leaveTime\n      employeeId\n      note\n      edited\n    }\n  }\n":
+    types.EmployeeRecordUpdateDocument,
 }
 
 /**
@@ -85,6 +89,18 @@ export function graphql(
 export function graphql(
   source: "\n  query Jobs {\n    jobs {\n      id\n      name\n      rank\n    }\n  }\n",
 ): (typeof documents)["\n  query Jobs {\n    jobs {\n      id\n      name\n      rank\n    }\n  }\n"]
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: "\n  mutation EmployeeRecordCreate($input: EmployeeRecordCreateInput!) {\n    employeeRecordCreate(input: $input) {\n      date\n      attendTime\n      leaveTime\n      employeeId\n      note\n      edited\n    }\n  }\n",
+): (typeof documents)["\n  mutation EmployeeRecordCreate($input: EmployeeRecordCreateInput!) {\n    employeeRecordCreate(input: $input) {\n      date\n      attendTime\n      leaveTime\n      employeeId\n      note\n      edited\n    }\n  }\n"]
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: "\n  mutation EmployeeRecordUpdate($input: EmployeeRecordUpdateInput!) {\n    employeeRecordUpdate(input: $input) {\n      date\n      attendTime\n      leaveTime\n      employeeId\n      note\n      edited\n    }\n  }\n",
+): (typeof documents)["\n  mutation EmployeeRecordUpdate($input: EmployeeRecordUpdateInput!) {\n    employeeRecordUpdate(input: $input) {\n      date\n      attendTime\n      leaveTime\n      employeeId\n      note\n      edited\n    }\n  }\n"]
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {}

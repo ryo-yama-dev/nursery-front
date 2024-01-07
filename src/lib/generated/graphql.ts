@@ -119,7 +119,7 @@ export type EmployeeRecord = {
   edited: Scalars["Boolean"]["output"]
   employeeId: Scalars["Int"]["output"]
   id: Scalars["Int"]["output"]
-  leaveTime: Scalars["Time"]["output"]
+  leaveTime?: Maybe<Scalars["Time"]["output"]>
   note: Scalars["String"]["output"]
 }
 
@@ -127,13 +127,21 @@ export type EmployeeRecordCreateInput = {
   attendTime: Scalars["Time"]["input"]
   date: Scalars["Date"]["input"]
   employeeId: Scalars["Int"]["input"]
-  leaveTime: Scalars["Time"]["input"]
+  leaveTime?: InputMaybe<Scalars["Time"]["input"]>
 }
 
 export type EmployeeRecordDaily = {
   __typename?: "EmployeeRecordDaily"
   employee: Employee
   records: Array<Maybe<EmployeeRecord>>
+}
+
+export type EmployeeRecordUpdateInput = {
+  attendTime?: InputMaybe<Scalars["Time"]["input"]>
+  date: Scalars["Date"]["input"]
+  employeeId: Scalars["Int"]["input"]
+  leaveTime?: InputMaybe<Scalars["Time"]["input"]>
+  note?: InputMaybe<Scalars["String"]["input"]>
 }
 
 /** 職級 */
@@ -158,6 +166,7 @@ export type Mutation = {
   classroomCreate: Classroom
   employeeCreate: Employee
   employeeRecordCreate: EmployeeRecord
+  employeeRecordUpdate: EmployeeRecord
   jobCreate: Job
 }
 
@@ -175,6 +184,10 @@ export type MutationEmployeeCreateArgs = {
 
 export type MutationEmployeeRecordCreateArgs = {
   input: EmployeeRecordCreateInput
+}
+
+export type MutationEmployeeRecordUpdateArgs = {
+  input: EmployeeRecordUpdateInput
 }
 
 export type MutationJobCreateArgs = {
@@ -374,7 +387,7 @@ export type EmployeeMonthlyQuery = {
       id: number
       date: any
       attendTime: any
-      leaveTime: any
+      leaveTime?: any | null
       note: string
       edited: boolean
       employeeId: number
@@ -408,6 +421,40 @@ export type JobsQueryVariables = Exact<{ [key: string]: never }>
 export type JobsQuery = {
   __typename?: "Query"
   jobs: Array<{ __typename?: "Job"; id: number; name: string; rank: number }>
+}
+
+export type EmployeeRecordCreateMutationVariables = Exact<{
+  input: EmployeeRecordCreateInput
+}>
+
+export type EmployeeRecordCreateMutation = {
+  __typename?: "Mutation"
+  employeeRecordCreate: {
+    __typename?: "EmployeeRecord"
+    date: any
+    attendTime: any
+    leaveTime?: any | null
+    employeeId: number
+    note: string
+    edited: boolean
+  }
+}
+
+export type EmployeeRecordUpdateMutationVariables = Exact<{
+  input: EmployeeRecordUpdateInput
+}>
+
+export type EmployeeRecordUpdateMutation = {
+  __typename?: "Mutation"
+  employeeRecordUpdate: {
+    __typename?: "EmployeeRecord"
+    date: any
+    attendTime: any
+    leaveTime?: any | null
+    employeeId: number
+    note: string
+    edited: boolean
+  }
 }
 
 export const ChildrenDocument = {
@@ -825,3 +872,121 @@ export const JobsDocument = {
     },
   ],
 } as unknown as DocumentNode<JobsQuery, JobsQueryVariables>
+export const EmployeeRecordCreateDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "EmployeeRecordCreate" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "input" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "EmployeeRecordCreateInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "employeeRecordCreate" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "input" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "input" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "date" } },
+                { kind: "Field", name: { kind: "Name", value: "attendTime" } },
+                { kind: "Field", name: { kind: "Name", value: "leaveTime" } },
+                { kind: "Field", name: { kind: "Name", value: "employeeId" } },
+                { kind: "Field", name: { kind: "Name", value: "note" } },
+                { kind: "Field", name: { kind: "Name", value: "edited" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  EmployeeRecordCreateMutation,
+  EmployeeRecordCreateMutationVariables
+>
+export const EmployeeRecordUpdateDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "EmployeeRecordUpdate" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "input" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "EmployeeRecordUpdateInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "employeeRecordUpdate" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "input" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "input" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "date" } },
+                { kind: "Field", name: { kind: "Name", value: "attendTime" } },
+                { kind: "Field", name: { kind: "Name", value: "leaveTime" } },
+                { kind: "Field", name: { kind: "Name", value: "employeeId" } },
+                { kind: "Field", name: { kind: "Name", value: "note" } },
+                { kind: "Field", name: { kind: "Name", value: "edited" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  EmployeeRecordUpdateMutation,
+  EmployeeRecordUpdateMutationVariables
+>
