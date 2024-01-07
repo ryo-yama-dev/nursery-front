@@ -1,11 +1,13 @@
-import { graphql } from "lib/graphql"
+import { graphql } from "lib/generated"
 
 export const employeesQuery = graphql(`
   query Employees {
     employees {
       id
       authId
-      name
+      serialNumber
+      firstName
+      lastName
       sex
       belong
       classroomId
@@ -29,7 +31,8 @@ export const employeesMonthly = graphql(`
     employeesMonthly(input: $input) {
       employee {
         id
-        name
+        firstName
+        lastName
       }
       records {
         id
@@ -49,7 +52,9 @@ export const employeeCreate = graphql(`
     employeeCreate(input: $input) {
       id
       authId
-      name
+      serialNumber
+      firstName
+      lastName
       sex
       belong
       classroomId

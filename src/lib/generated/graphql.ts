@@ -36,28 +36,33 @@ export type Scalars = {
 }
 
 /** 園児 */
-export type Child = Timestamp & {
-  __typename?: "Child"
-  address: Scalars["String"]["output"]
-  age: Scalars["Int"]["output"]
-  classroomId?: Maybe<Scalars["Int"]["output"]>
-  createdAt: Scalars["DateTime"]["output"]
-  id: Scalars["Int"]["output"]
-  name: Scalars["String"]["output"]
-  parent: Scalars["String"]["output"]
-  phone: Scalars["String"]["output"]
-  sex: Scalars["String"]["output"]
-  updatedAt: Scalars["DateTime"]["output"]
-}
+export type Child = Person &
+  Timestamp & {
+    __typename?: "Child"
+    address: Scalars["String"]["output"]
+    age: Scalars["Int"]["output"]
+    classroomId?: Maybe<Scalars["Int"]["output"]>
+    createdAt: Scalars["DateTime"]["output"]
+    firstName: Scalars["String"]["output"]
+    id: Scalars["Int"]["output"]
+    lastName: Scalars["String"]["output"]
+    parent: Scalars["String"]["output"]
+    phone: Scalars["String"]["output"]
+    sex: Sex
+    status: Status
+    updatedAt: Scalars["DateTime"]["output"]
+  }
 
 export type ChildCreateInput = {
   address: Scalars["String"]["input"]
   age: Scalars["Int"]["input"]
   classroomId?: InputMaybe<Scalars["Int"]["input"]>
-  name: Scalars["String"]["input"]
+  firstName: Scalars["String"]["input"]
+  lastName: Scalars["String"]["input"]
   parent: Scalars["String"]["input"]
   phone: Scalars["String"]["input"]
   sex: Sex
+  status: Status
 }
 
 /** 子供組 */
@@ -78,32 +83,36 @@ export type ClassroomCreateInput = {
 }
 
 /** 従業員 */
-export type Employee = Timestamp & {
-  __typename?: "Employee"
-  authId?: Maybe<Scalars["String"]["output"]>
-  belong: Scalars["Boolean"]["output"]
-  classroomId?: Maybe<Scalars["Int"]["output"]>
-  createdAt: Scalars["DateTime"]["output"]
-  id: Scalars["Int"]["output"]
-  job: Job
-  jobId: Scalars["Int"]["output"]
-  name: Scalars["String"]["output"]
-  profiles?: Maybe<Array<Profile>>
-  sex: Scalars["String"]["output"]
-  updatedAt: Scalars["DateTime"]["output"]
-}
+export type Employee = Person &
+  Timestamp & {
+    __typename?: "Employee"
+    authId?: Maybe<Scalars["String"]["output"]>
+    belong: Scalars["Boolean"]["output"]
+    classroomId?: Maybe<Scalars["Int"]["output"]>
+    createdAt: Scalars["DateTime"]["output"]
+    firstName: Scalars["String"]["output"]
+    id: Scalars["Int"]["output"]
+    job: Job
+    jobId: Scalars["Int"]["output"]
+    lastName: Scalars["String"]["output"]
+    profiles?: Maybe<Array<Profile>>
+    serialNumber: Scalars["String"]["output"]
+    sex: Sex
+    updatedAt: Scalars["DateTime"]["output"]
+  }
 
 export type EmployeeCreateInput = {
-  authId: Scalars["String"]["input"]
   belong: Scalars["Boolean"]["input"]
+  firstName: Scalars["String"]["input"]
   jobId: Scalars["Int"]["input"]
-  name: Scalars["String"]["input"]
+  lastName: Scalars["String"]["input"]
   profiles?: InputMaybe<Array<ProfileInput>>
+  serialNumber: Scalars["String"]["input"]
   sex: Sex
 }
 
 /** 従業員記録 */
-export type EmployeeRecord = Record & {
+export type EmployeeRecord = {
   __typename?: "EmployeeRecord"
   attendTime: Scalars["Time"]["output"]
   date: Scalars["Date"]["output"]
@@ -172,6 +181,14 @@ export type MutationJobCreateArgs = {
   input: JobCreateInput
 }
 
+/** 人物基本情報 */
+export type Person = {
+  firstName: Scalars["String"]["output"]
+  id: Scalars["Int"]["output"]
+  lastName: Scalars["String"]["output"]
+  sex: Sex
+}
+
 /** プロフィール */
 export type Profile = {
   __typename?: "Profile"
@@ -222,16 +239,6 @@ export type QueryEmployeesMonthlyArgs = {
   input: RecordsQueryInput
 }
 
-/** 日次記録 */
-export type Record = {
-  attendTime: Scalars["Time"]["output"]
-  date: Scalars["Date"]["output"]
-  edited: Scalars["Boolean"]["output"]
-  id: Scalars["Int"]["output"]
-  leaveTime: Scalars["Time"]["output"]
-  note: Scalars["String"]["output"]
-}
-
 export type RecordsQueryInput = {
   month: Scalars["Int"]["input"]
   week?: InputMaybe<Scalars["Int"]["input"]>
@@ -244,17 +251,83 @@ export enum Sex {
   Male = "MALE",
 }
 
+/** 在内・在外 */
+export enum Status {
+  Absence = "absence",
+  Attend = "attend",
+  Leave = "leave",
+  NotCome = "not_come",
+  Outing = "outing",
+}
+
 /** タイムスタンプ */
 export type Timestamp = {
   createdAt: Scalars["DateTime"]["output"]
   updatedAt: Scalars["DateTime"]["output"]
 }
 
+export type ChildrenQueryVariables = Exact<{ [key: string]: never }>
+
+export type ChildrenQuery = {
+  __typename?: "Query"
+  children: Array<{
+    __typename?: "Child"
+    id: number
+    firstName: string
+    lastName: string
+    sex: Sex
+    status: Status
+    address: string
+    phone: string
+    parent: string
+    createdAt: any
+    updatedAt: any
+  }>
+}
+
+export type ChildCreateMutationVariables = Exact<{
+  input: ChildCreateInput
+}>
+
+export type ChildCreateMutation = {
+  __typename?: "Mutation"
+  childCreate: {
+    __typename?: "Child"
+    id: number
+    firstName: string
+    lastName: string
+    sex: Sex
+    age: number
+    address: string
+    phone: string
+    parent: string
+  }
+}
+
 export type ClassroomsQueryVariables = Exact<{ [key: string]: never }>
 
 export type ClassroomsQuery = {
   __typename?: "Query"
-  classrooms: Array<{ __typename?: "Classroom"; age: number; name: string }>
+  classrooms: Array<{
+    __typename?: "Classroom"
+    id: number
+    age: number
+    name: string
+    children: Array<{
+      __typename?: "Child"
+      id: number
+      firstName: string
+      lastName: string
+      sex: Sex
+      status: Status
+    }>
+    employees: Array<{
+      __typename?: "Employee"
+      id: number
+      firstName: string
+      lastName: string
+    }>
+  }>
 }
 
 export type EmployeesQueryVariables = Exact<{ [key: string]: never }>
@@ -265,8 +338,10 @@ export type EmployeesQuery = {
     __typename?: "Employee"
     id: number
     authId?: string | null
-    name: string
-    sex: string
+    serialNumber: string
+    firstName: string
+    lastName: string
+    sex: Sex
     belong: boolean
     classroomId?: number | null
     createdAt: any
@@ -288,7 +363,12 @@ export type EmployeeMonthlyQuery = {
   __typename?: "Query"
   employeesMonthly: Array<{
     __typename?: "EmployeeRecordDaily"
-    employee: { __typename?: "Employee"; id: number; name: string }
+    employee: {
+      __typename?: "Employee"
+      id: number
+      firstName: string
+      lastName: string
+    }
     records: Array<{
       __typename?: "EmployeeRecord"
       id: number
@@ -312,8 +392,10 @@ export type EmployeeCreateMutation = {
     __typename?: "Employee"
     id: number
     authId?: string | null
-    name: string
-    sex: string
+    serialNumber: string
+    firstName: string
+    lastName: string
+    sex: Sex
     belong: boolean
     classroomId?: number | null
     createdAt: any
@@ -328,6 +410,98 @@ export type JobsQuery = {
   jobs: Array<{ __typename?: "Job"; id: number; name: string; rank: number }>
 }
 
+export const ChildrenDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "Children" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "children" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "firstName" } },
+                { kind: "Field", name: { kind: "Name", value: "lastName" } },
+                { kind: "Field", name: { kind: "Name", value: "sex" } },
+                { kind: "Field", name: { kind: "Name", value: "status" } },
+                { kind: "Field", name: { kind: "Name", value: "address" } },
+                { kind: "Field", name: { kind: "Name", value: "phone" } },
+                { kind: "Field", name: { kind: "Name", value: "parent" } },
+                { kind: "Field", name: { kind: "Name", value: "createdAt" } },
+                { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<ChildrenQuery, ChildrenQueryVariables>
+export const ChildCreateDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "ChildCreate" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "input" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "ChildCreateInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "childCreate" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "input" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "input" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "firstName" } },
+                { kind: "Field", name: { kind: "Name", value: "lastName" } },
+                { kind: "Field", name: { kind: "Name", value: "sex" } },
+                { kind: "Field", name: { kind: "Name", value: "age" } },
+                { kind: "Field", name: { kind: "Name", value: "address" } },
+                { kind: "Field", name: { kind: "Name", value: "phone" } },
+                { kind: "Field", name: { kind: "Name", value: "parent" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<ChildCreateMutation, ChildCreateMutationVariables>
 export const ClassroomsDocument = {
   kind: "Document",
   definitions: [
@@ -344,8 +518,50 @@ export const ClassroomsDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
                 { kind: "Field", name: { kind: "Name", value: "age" } },
                 { kind: "Field", name: { kind: "Name", value: "name" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "children" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "firstName" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "lastName" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "sex" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "status" },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "employees" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "firstName" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "lastName" },
+                      },
+                    ],
+                  },
+                },
               ],
             },
           },
@@ -372,7 +588,12 @@ export const EmployeesDocument = {
               selections: [
                 { kind: "Field", name: { kind: "Name", value: "id" } },
                 { kind: "Field", name: { kind: "Name", value: "authId" } },
-                { kind: "Field", name: { kind: "Name", value: "name" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "serialNumber" },
+                },
+                { kind: "Field", name: { kind: "Name", value: "firstName" } },
+                { kind: "Field", name: { kind: "Name", value: "lastName" } },
                 { kind: "Field", name: { kind: "Name", value: "sex" } },
                 { kind: "Field", name: { kind: "Name", value: "belong" } },
                 { kind: "Field", name: { kind: "Name", value: "classroomId" } },
@@ -461,7 +682,14 @@ export const EmployeeMonthlyDocument = {
                     kind: "SelectionSet",
                     selections: [
                       { kind: "Field", name: { kind: "Name", value: "id" } },
-                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "firstName" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "lastName" },
+                      },
                     ],
                   },
                 },
@@ -548,7 +776,12 @@ export const EmployeeCreateDocument = {
               selections: [
                 { kind: "Field", name: { kind: "Name", value: "id" } },
                 { kind: "Field", name: { kind: "Name", value: "authId" } },
-                { kind: "Field", name: { kind: "Name", value: "name" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "serialNumber" },
+                },
+                { kind: "Field", name: { kind: "Name", value: "firstName" } },
+                { kind: "Field", name: { kind: "Name", value: "lastName" } },
                 { kind: "Field", name: { kind: "Name", value: "sex" } },
                 { kind: "Field", name: { kind: "Name", value: "belong" } },
                 { kind: "Field", name: { kind: "Name", value: "classroomId" } },

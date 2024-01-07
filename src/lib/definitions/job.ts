@@ -1,4 +1,4 @@
-import { graphql } from "lib/graphql"
+import { graphql } from "lib/generated"
 
 export const jobsQuery = graphql(`
   query Jobs {
