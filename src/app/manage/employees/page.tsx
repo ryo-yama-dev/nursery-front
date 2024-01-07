@@ -14,7 +14,7 @@ import {
 } from "components/common"
 import { EmployeeCreateDialog } from "components/manage"
 import { employeesQuery, employeeCreate, jobsQuery } from "lib/definitions"
-import { EmployeeCreateInput, Job } from "lib/graphql"
+import { EmployeeCreateInput, Job } from "lib/generated/graphql"
 
 export default function EmployeesPage() {
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -61,7 +61,9 @@ export default function EmployeesPage() {
           <TableBody>
             {data?.employees.map((employee) => (
               <TableRow key={employee.id}>
-                <TableCell>{employee.name}</TableCell>
+                <TableCell>
+                  {employee.lastName} {employee.firstName}
+                </TableCell>
                 <TableCell>{employee.authId}</TableCell>
                 <TableCell>{employee.sex === "MALE" ? "男" : "女"}</TableCell>
                 <TableCell>{employee.job.name}</TableCell>

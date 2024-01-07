@@ -55,7 +55,9 @@ export default function ManagePage() {
         </div>
         {data?.employeesMonthly.map(({ employee, records }, i) => (
           <div key={i} className="flex flex-col px-2">
-            <Link href={`/employee/${employee.id}`}>{employee.name}</Link>
+            <Link href={`/employee/${employee.id}`}>
+              {employee.lastName} {employee.firstName}
+            </Link>
             {records?.map((record, i) => (
               <DailyRecord key={i} record={record} />
             ))}

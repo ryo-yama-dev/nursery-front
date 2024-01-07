@@ -1,4 +1,4 @@
-import { EmployeeRecord } from "lib/graphql/graphql"
+import { EmployeeRecord } from "lib/generated/graphql"
 
 const MARK = {
   NOT_RECORDED: "x",

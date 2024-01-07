@@ -11,7 +11,7 @@ import {
   MenuItem,
   TextField,
 } from "components/common"
-import { EmployeeCreateInput, Job, Sex } from "lib/graphql"
+import { EmployeeCreateInput, Job, Sex } from "lib/generated/graphql"
 
 export interface EmployeeCreateDialogProps {
   isOpen: boolean
@@ -30,9 +30,10 @@ export const EmployeeCreateDialog = ({
   const [sex, setSex] = useState<Sex>(Sex.Male)
   const { control, getValues, reset } = useForm<EmployeeCreateInput>({
     defaultValues: {
-      name: "",
+      lastName: "",
+      firstName: "",
       belong: true,
-      authId: "",
+      serialNumber: "",
     },
   })
 
@@ -60,14 +61,19 @@ export const EmployeeCreateDialog = ({
       <DialogContent dividers>
         <div className="grid grid-cols-2 gap-4">
           <Controller
-            name="name"
+            name="lastName"
             control={control}
-            render={({ field }) => <TextField label="名前" {...field} />}
+            render={({ field }) => <TextField label="姓" {...field} />}
           />
           <Controller
-            name="authId"
+            name="firstName"
             control={control}
-            render={({ field }) => <TextField label="認証ID" {...field} />}
+            render={({ field }) => <TextField label="名" {...field} />}
+          />
+          <Controller
+            name="serialNumber"
+            control={control}
+            render={({ field }) => <TextField label="従業員ID" {...field} />}
           />
           <Select
             value={jobId}
