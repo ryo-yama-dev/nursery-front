@@ -304,17 +304,7 @@ export type ChildCreateMutationVariables = Exact<{
 
 export type ChildCreateMutation = {
   __typename?: "Mutation"
-  childCreate: {
-    __typename?: "Child"
-    id: number
-    firstName: string
-    lastName: string
-    sex: Sex
-    age: number
-    address: string
-    phone: string
-    parent: string
-  }
+  childCreate: { __typename?: "Child"; id: number }
 }
 
 export type ClassroomsQueryVariables = Exact<{ [key: string]: never }>
@@ -401,19 +391,7 @@ export type EmployeeCreateMutationVariables = Exact<{
 
 export type EmployeeCreateMutation = {
   __typename?: "Mutation"
-  employeeCreate: {
-    __typename?: "Employee"
-    id: number
-    authId?: string | null
-    serialNumber: string
-    firstName: string
-    lastName: string
-    sex: Sex
-    belong: boolean
-    classroomId?: number | null
-    createdAt: any
-    updatedAt: any
-  }
+  employeeCreate: { __typename?: "Employee"; id: number }
 }
 
 export type JobsQueryVariables = Exact<{ [key: string]: never }>
@@ -534,13 +512,6 @@ export const ChildCreateDocument = {
               kind: "SelectionSet",
               selections: [
                 { kind: "Field", name: { kind: "Name", value: "id" } },
-                { kind: "Field", name: { kind: "Name", value: "firstName" } },
-                { kind: "Field", name: { kind: "Name", value: "lastName" } },
-                { kind: "Field", name: { kind: "Name", value: "sex" } },
-                { kind: "Field", name: { kind: "Name", value: "age" } },
-                { kind: "Field", name: { kind: "Name", value: "address" } },
-                { kind: "Field", name: { kind: "Name", value: "phone" } },
-                { kind: "Field", name: { kind: "Name", value: "parent" } },
               ],
             },
           },
@@ -822,18 +793,6 @@ export const EmployeeCreateDocument = {
               kind: "SelectionSet",
               selections: [
                 { kind: "Field", name: { kind: "Name", value: "id" } },
-                { kind: "Field", name: { kind: "Name", value: "authId" } },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "serialNumber" },
-                },
-                { kind: "Field", name: { kind: "Name", value: "firstName" } },
-                { kind: "Field", name: { kind: "Name", value: "lastName" } },
-                { kind: "Field", name: { kind: "Name", value: "sex" } },
-                { kind: "Field", name: { kind: "Name", value: "belong" } },
-                { kind: "Field", name: { kind: "Name", value: "classroomId" } },
-                { kind: "Field", name: { kind: "Name", value: "createdAt" } },
-                { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
               ],
             },
           },

@@ -15,7 +15,7 @@ import { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/
 const documents = {
   "\n  query Children {\n    children {\n      id\n      firstName\n      lastName\n      sex\n      status\n      address\n      phone\n      parent\n      createdAt\n      updatedAt\n    }\n  }\n":
     types.ChildrenDocument,
-  "\n  mutation ChildCreate($input: ChildCreateInput!) {\n    childCreate(input: $input) {\n      id\n      firstName\n      lastName\n      sex\n      age\n      address\n      phone\n      parent\n    }\n  }\n":
+  "\n  mutation ChildCreate($input: ChildCreateInput!) {\n    childCreate(input: $input) {\n      id\n    }\n  }\n":
     types.ChildCreateDocument,
   "\n  query Classrooms {\n    classrooms {\n      id\n      age\n      name\n      children {\n        id\n        firstName\n        lastName\n        sex\n        status\n      }\n      employees {\n        id\n        firstName\n        lastName\n      }\n    }\n  }\n":
     types.ClassroomsDocument,
@@ -23,7 +23,7 @@ const documents = {
     types.EmployeesDocument,
   "\n  query EmployeeMonthly($input: RecordsQueryInput!) {\n    employeesMonthly(input: $input) {\n      employee {\n        id\n        firstName\n        lastName\n      }\n      records {\n        id\n        date\n        attendTime\n        leaveTime\n        note\n        edited\n        employeeId\n      }\n    }\n  }\n":
     types.EmployeeMonthlyDocument,
-  "\n  mutation EmployeeCreate($input: EmployeeCreateInput!) {\n    employeeCreate(input: $input) {\n      id\n      authId\n      serialNumber\n      firstName\n      lastName\n      sex\n      belong\n      classroomId\n      createdAt\n      updatedAt\n    }\n  }\n":
+  "\n  mutation EmployeeCreate($input: EmployeeCreateInput!) {\n    employeeCreate(input: $input) {\n      id\n    }\n  }\n":
     types.EmployeeCreateDocument,
   "\n  query Jobs {\n    jobs {\n      id\n      name\n      rank\n    }\n  }\n":
     types.JobsDocument,
@@ -57,8 +57,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  mutation ChildCreate($input: ChildCreateInput!) {\n    childCreate(input: $input) {\n      id\n      firstName\n      lastName\n      sex\n      age\n      address\n      phone\n      parent\n    }\n  }\n",
-): (typeof documents)["\n  mutation ChildCreate($input: ChildCreateInput!) {\n    childCreate(input: $input) {\n      id\n      firstName\n      lastName\n      sex\n      age\n      address\n      phone\n      parent\n    }\n  }\n"]
+  source: "\n  mutation ChildCreate($input: ChildCreateInput!) {\n    childCreate(input: $input) {\n      id\n    }\n  }\n",
+): (typeof documents)["\n  mutation ChildCreate($input: ChildCreateInput!) {\n    childCreate(input: $input) {\n      id\n    }\n  }\n"]
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -81,8 +81,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  mutation EmployeeCreate($input: EmployeeCreateInput!) {\n    employeeCreate(input: $input) {\n      id\n      authId\n      serialNumber\n      firstName\n      lastName\n      sex\n      belong\n      classroomId\n      createdAt\n      updatedAt\n    }\n  }\n",
-): (typeof documents)["\n  mutation EmployeeCreate($input: EmployeeCreateInput!) {\n    employeeCreate(input: $input) {\n      id\n      authId\n      serialNumber\n      firstName\n      lastName\n      sex\n      belong\n      classroomId\n      createdAt\n      updatedAt\n    }\n  }\n"]
+  source: "\n  mutation EmployeeCreate($input: EmployeeCreateInput!) {\n    employeeCreate(input: $input) {\n      id\n    }\n  }\n",
+): (typeof documents)["\n  mutation EmployeeCreate($input: EmployeeCreateInput!) {\n    employeeCreate(input: $input) {\n      id\n    }\n  }\n"]
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

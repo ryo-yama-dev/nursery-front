@@ -51,15 +51,6 @@ export const employeeCreate = graphql(`
   mutation EmployeeCreate($input: EmployeeCreateInput!) {
     employeeCreate(input: $input) {
       id
-      authId
-      serialNumber
-      firstName
-      lastName
-      sex
-      belong
-      classroomId
-      createdAt
-      updatedAt
     }
   }
 `)
