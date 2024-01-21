@@ -40,7 +40,7 @@ export type Child = Person &
   Timestamp & {
     __typename?: "Child"
     address: Scalars["String"]["output"]
-    age: Scalars["Int"]["output"]
+    birthday: Scalars["Date"]["output"]
     classroomId?: Maybe<Scalars["Int"]["output"]>
     createdAt: Scalars["DateTime"]["output"]
     firstName: Scalars["String"]["output"]
@@ -56,6 +56,7 @@ export type Child = Person &
 export type ChildCreateInput = {
   address: Scalars["String"]["input"]
   age: Scalars["Int"]["input"]
+  birthday: Scalars["Date"]["input"]
   classroomId?: InputMaybe<Scalars["Int"]["input"]>
   firstName: Scalars["String"]["input"]
   lastName: Scalars["String"]["input"]
@@ -88,6 +89,7 @@ export type Employee = Person &
     __typename?: "Employee"
     authId?: Maybe<Scalars["String"]["output"]>
     belong: Scalars["Boolean"]["output"]
+    birthday: Scalars["Date"]["output"]
     classroomId?: Maybe<Scalars["Int"]["output"]>
     createdAt: Scalars["DateTime"]["output"]
     firstName: Scalars["String"]["output"]
@@ -103,12 +105,21 @@ export type Employee = Person &
 
 export type EmployeeCreateInput = {
   belong: Scalars["Boolean"]["input"]
+  birthday: Scalars["Date"]["input"]
   firstName: Scalars["String"]["input"]
   jobId: Scalars["Int"]["input"]
   lastName: Scalars["String"]["input"]
   profiles?: InputMaybe<Array<ProfileInput>>
   serialNumber: Scalars["String"]["input"]
   sex: Sex
+}
+
+export type EmployeeFilterInput = {
+  belong?: InputMaybe<Scalars["Boolean"]["input"]>
+  firstName?: InputMaybe<Scalars["String"]["input"]>
+  jobId?: InputMaybe<Scalars["Int"]["input"]>
+  lastName?: InputMaybe<Scalars["String"]["input"]>
+  serialNumber?: InputMaybe<Scalars["String"]["input"]>
 }
 
 /** 従業員記録 */
@@ -196,6 +207,7 @@ export type MutationJobCreateArgs = {
 
 /** 人物基本情報 */
 export type Person = {
+  birthday: Scalars["Date"]["output"]
   firstName: Scalars["String"]["output"]
   id: Scalars["Int"]["output"]
   lastName: Scalars["String"]["output"]
@@ -248,6 +260,10 @@ export type QueryEmployeeArgs = {
   id: Scalars["Int"]["input"]
 }
 
+export type QueryEmployeesArgs = {
+  input?: InputMaybe<EmployeeFilterInput>
+}
+
 export type QueryEmployeesMonthlyArgs = {
   input: RecordsQueryInput
 }
@@ -286,6 +302,7 @@ export type ChildrenQuery = {
   children: Array<{
     __typename?: "Child"
     id: number
+    birthday: any
     firstName: string
     lastName: string
     sex: Sex
@@ -333,7 +350,9 @@ export type ClassroomsQuery = {
   }>
 }
 
-export type EmployeesQueryVariables = Exact<{ [key: string]: never }>
+export type EmployeesQueryVariables = Exact<{
+  input?: InputMaybe<EmployeeFilterInput>
+}>
 
 export type EmployeesQuery = {
   __typename?: "Query"
@@ -345,6 +364,7 @@ export type EmployeesQuery = {
     firstName: string
     lastName: string
     sex: Sex
+    birthday: any
     belong: boolean
     classroomId?: number | null
     createdAt: any
@@ -452,6 +472,7 @@ export const ChildrenDocument = {
               kind: "SelectionSet",
               selections: [
                 { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "birthday" } },
                 { kind: "Field", name: { kind: "Name", value: "firstName" } },
                 { kind: "Field", name: { kind: "Name", value: "lastName" } },
                 { kind: "Field", name: { kind: "Name", value: "sex" } },
@@ -595,12 +616,35 @@ export const EmployeesDocument = {
       kind: "OperationDefinition",
       operation: "query",
       name: { kind: "Name", value: "Employees" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "input" },
+          },
+          type: {
+            kind: "NamedType",
+            name: { kind: "Name", value: "EmployeeFilterInput" },
+          },
+        },
+      ],
       selectionSet: {
         kind: "SelectionSet",
         selections: [
           {
             kind: "Field",
             name: { kind: "Name", value: "employees" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "input" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "input" },
+                },
+              },
+            ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
@@ -613,6 +657,7 @@ export const EmployeesDocument = {
                 { kind: "Field", name: { kind: "Name", value: "firstName" } },
                 { kind: "Field", name: { kind: "Name", value: "lastName" } },
                 { kind: "Field", name: { kind: "Name", value: "sex" } },
+                { kind: "Field", name: { kind: "Name", value: "birthday" } },
                 { kind: "Field", name: { kind: "Name", value: "belong" } },
                 { kind: "Field", name: { kind: "Name", value: "classroomId" } },
                 { kind: "Field", name: { kind: "Name", value: "createdAt" } },

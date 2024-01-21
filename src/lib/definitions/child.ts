@@ -4,6 +4,7 @@ export const childrenQuery = graphql(`
   query Children {
     children {
       id
+      birthday
       firstName
       lastName
       sex

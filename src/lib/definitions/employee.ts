@@ -1,14 +1,15 @@
 import { graphql } from "lib/generated"
 
 export const employeesQuery = graphql(`
-  query Employees {
-    employees {
+  query Employees($input: EmployeeFilterInput) {
+    employees(input: $input) {
       id
       authId
       serialNumber
       firstName
       lastName
       sex
+      birthday
       belong
       classroomId
       createdAt

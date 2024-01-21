@@ -13,13 +13,13 @@ import { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-  "\n  query Children {\n    children {\n      id\n      firstName\n      lastName\n      sex\n      status\n      address\n      phone\n      parent\n      createdAt\n      updatedAt\n    }\n  }\n":
+  "\n  query Children {\n    children {\n      id\n      birthday\n      firstName\n      lastName\n      sex\n      status\n      address\n      phone\n      parent\n      createdAt\n      updatedAt\n    }\n  }\n":
     types.ChildrenDocument,
   "\n  mutation ChildCreate($input: ChildCreateInput!) {\n    childCreate(input: $input) {\n      id\n    }\n  }\n":
     types.ChildCreateDocument,
   "\n  query Classrooms {\n    classrooms {\n      id\n      age\n      name\n      children {\n        id\n        firstName\n        lastName\n        sex\n        status\n      }\n      employees {\n        id\n        firstName\n        lastName\n      }\n    }\n  }\n":
     types.ClassroomsDocument,
-  "\n  query Employees {\n    employees {\n      id\n      authId\n      serialNumber\n      firstName\n      lastName\n      sex\n      belong\n      classroomId\n      createdAt\n      updatedAt\n      job {\n        id\n        name\n        rank\n      }\n      profiles {\n        id\n        headline\n      }\n    }\n  }\n":
+  "\n  query Employees($input: EmployeeFilterInput) {\n    employees(input: $input) {\n      id\n      authId\n      serialNumber\n      firstName\n      lastName\n      sex\n      birthday\n      belong\n      classroomId\n      createdAt\n      updatedAt\n      job {\n        id\n        name\n        rank\n      }\n      profiles {\n        id\n        headline\n      }\n    }\n  }\n":
     types.EmployeesDocument,
   "\n  query EmployeeMonthly($input: RecordsQueryInput!) {\n    employeesMonthly(input: $input) {\n      employee {\n        id\n        firstName\n        lastName\n      }\n      records {\n        id\n        date\n        attendTime\n        leaveTime\n        note\n        edited\n        employeeId\n      }\n    }\n  }\n":
     types.EmployeeMonthlyDocument,
@@ -51,8 +51,8 @@ export function graphql(source: string): unknown
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  query Children {\n    children {\n      id\n      firstName\n      lastName\n      sex\n      status\n      address\n      phone\n      parent\n      createdAt\n      updatedAt\n    }\n  }\n",
-): (typeof documents)["\n  query Children {\n    children {\n      id\n      firstName\n      lastName\n      sex\n      status\n      address\n      phone\n      parent\n      createdAt\n      updatedAt\n    }\n  }\n"]
+  source: "\n  query Children {\n    children {\n      id\n      birthday\n      firstName\n      lastName\n      sex\n      status\n      address\n      phone\n      parent\n      createdAt\n      updatedAt\n    }\n  }\n",
+): (typeof documents)["\n  query Children {\n    children {\n      id\n      birthday\n      firstName\n      lastName\n      sex\n      status\n      address\n      phone\n      parent\n      createdAt\n      updatedAt\n    }\n  }\n"]
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -69,8 +69,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  query Employees {\n    employees {\n      id\n      authId\n      serialNumber\n      firstName\n      lastName\n      sex\n      belong\n      classroomId\n      createdAt\n      updatedAt\n      job {\n        id\n        name\n        rank\n      }\n      profiles {\n        id\n        headline\n      }\n    }\n  }\n",
-): (typeof documents)["\n  query Employees {\n    employees {\n      id\n      authId\n      serialNumber\n      firstName\n      lastName\n      sex\n      belong\n      classroomId\n      createdAt\n      updatedAt\n      job {\n        id\n        name\n        rank\n      }\n      profiles {\n        id\n        headline\n      }\n    }\n  }\n"]
+  source: "\n  query Employees($input: EmployeeFilterInput) {\n    employees(input: $input) {\n      id\n      authId\n      serialNumber\n      firstName\n      lastName\n      sex\n      birthday\n      belong\n      classroomId\n      createdAt\n      updatedAt\n      job {\n        id\n        name\n        rank\n      }\n      profiles {\n        id\n        headline\n      }\n    }\n  }\n",
+): (typeof documents)["\n  query Employees($input: EmployeeFilterInput) {\n    employees(input: $input) {\n      id\n      authId\n      serialNumber\n      firstName\n      lastName\n      sex\n      birthday\n      belong\n      classroomId\n      createdAt\n      updatedAt\n      job {\n        id\n        name\n        rank\n      }\n      profiles {\n        id\n        headline\n      }\n    }\n  }\n"]
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
