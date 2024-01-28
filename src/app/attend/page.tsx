@@ -1,8 +1,20 @@
 "use client"
 
-import { useEffect, useState, memo, useCallback } from "react"
+import { useEffect, useState, useCallback } from "react"
+import { useMutation, useLazyQuery } from "@apollo/client"
 import dayjs from "dayjs"
-import { Button, TextField } from "components/common"
+import { Button } from "components/common"
+import { SerialInputBoard } from "components/attend"
+import {
+  employeeRecordCreate,
+  employeeRecordUpdate,
+  employeesQuery,
+} from "lib/definitions"
+import {
+  Employee,
+  EmployeeRecordCreateInput,
+  EmployeeFilterInput,
+} from "lib/generated/graphql"
 
 /*
 TODO:
@@ -12,34 +24,28 @@ TODO:
 - 勤怠登録用Mutationを定義
 */
 
-const Keyboard = memo(
-  ({ handleClick }: { handleClick: (value: string) => void }) => (
-    <div className="grid grid-cols-3 gap-1">
-      {["1", "2", "3", "4", "5", "6", "7", "8", "9"].map((value) => (
-        <Button
-          key={value}
-          sx={{ width: "8rem", height: "8rem" }}
-          onClick={() => handleClick(value)}
-        >
-          {value}
-        </Button>
-      ))}
-    </div>
-  ),
-)
-
-Keyboard.displayName = "Keyboard"
-
 const activeColor = "#A5DEE4"
 const disabledColor = "#BDC0BA"
 
 export default function AttendPage() {
   const [time, setTime] = useState<dayjs.Dayjs>(dayjs())
-  const [authId, setAuthId] = useState<string>("")
+  const [onCreate] = useMutation(employeeRecordCreate)
+  const [getEmployees, { data, loading, error }] = useLazyQuery(employeesQuery)
 
-  const handleAdd = useCallback(
-    (value: string) => setAuthId(authId + value),
-    [authId],
+  const handleGetEmployees = useCallback(
+    async (input: EmployeeFilterInput) => {
+      const { data } = await getEmployees({ variables: { input: input } })
+      return data
+    },
+    [getEmployees],
+  )
+
+  const handleCreate = useCallback(
+    async (input: EmployeeRecordCreateInput) => {
+      const { data } = await onCreate({ variables: { input } })
+      if (data?.employeeRecordCreate?.date) console.log("success")
+    },
+    [onCreate],
   )
 
   const [switched, setSwitched] = useState<string>("1")
@@ -84,10 +90,10 @@ export default function AttendPage() {
           <span className="w-14">{time.format("ss")}</span>
         </div>
       </div>
-      <div className="mt-4 flex items-start justify-between">
-        <TextField value={authId} disabled />
-        <Keyboard handleClick={handleAdd} />
-      </div>
+      <SerialInputBoard
+        handleCreate={handleCreate}
+        handleGetEmployees={handleGetEmployees}
+      />
     </div>
   )
 }

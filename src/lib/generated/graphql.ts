@@ -430,11 +430,7 @@ export type EmployeeRecordCreateMutation = {
   employeeRecordCreate: {
     __typename?: "EmployeeRecord"
     date: any
-    attendTime: any
-    leaveTime?: any | null
     employeeId: number
-    note: string
-    edited: boolean
   }
 }
 
@@ -447,11 +443,7 @@ export type EmployeeRecordUpdateMutation = {
   employeeRecordUpdate: {
     __typename?: "EmployeeRecord"
     date: any
-    attendTime: any
-    leaveTime?: any | null
     employeeId: number
-    note: string
-    edited: boolean
   }
 }
 
@@ -919,11 +911,7 @@ export const EmployeeRecordCreateDocument = {
               kind: "SelectionSet",
               selections: [
                 { kind: "Field", name: { kind: "Name", value: "date" } },
-                { kind: "Field", name: { kind: "Name", value: "attendTime" } },
-                { kind: "Field", name: { kind: "Name", value: "leaveTime" } },
                 { kind: "Field", name: { kind: "Name", value: "employeeId" } },
-                { kind: "Field", name: { kind: "Name", value: "note" } },
-                { kind: "Field", name: { kind: "Name", value: "edited" } },
               ],
             },
           },
@@ -978,11 +966,7 @@ export const EmployeeRecordUpdateDocument = {
               kind: "SelectionSet",
               selections: [
                 { kind: "Field", name: { kind: "Name", value: "date" } },
-                { kind: "Field", name: { kind: "Name", value: "attendTime" } },
-                { kind: "Field", name: { kind: "Name", value: "leaveTime" } },
                 { kind: "Field", name: { kind: "Name", value: "employeeId" } },
-                { kind: "Field", name: { kind: "Name", value: "note" } },
-                { kind: "Field", name: { kind: "Name", value: "edited" } },
               ],
             },
           },
