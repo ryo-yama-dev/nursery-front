@@ -1,4 +1,4 @@
-import { graphql } from "lib/generated"
+import { graphql } from "@/lib/generated"
 
 export const childrenQuery = graphql(`
   query Children {

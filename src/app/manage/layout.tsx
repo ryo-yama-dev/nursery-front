@@ -1,4 +1,4 @@
-import { Header } from "components/common"
+import { Header } from "@/components/common"
 
 export default function ManagePageLayout({
   children,

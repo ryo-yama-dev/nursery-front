@@ -11,10 +11,10 @@ import {
   TableRow,
   TableCell,
   TableContainer,
-} from "components/common"
-import { EmployeeCreateDialog } from "components/manage"
-import { employeesQuery, employeeCreate, jobsQuery } from "lib/definitions"
-import { EmployeeCreateInput, Job } from "lib/generated/graphql"
+} from "@/components/common"
+import { EmployeeCreateDialog } from "@/components/manage"
+import { employeesQuery, employeeCreate, jobsQuery } from "@/lib/definitions"
+import { EmployeeCreateInput, Job } from "@/lib/generated/graphql"
 
 export default function EmployeesPage() {
   const [isOpen, setIsOpen] = useState<boolean>(false)

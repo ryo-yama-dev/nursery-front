@@ -11,13 +11,13 @@ import {
   DialogTitle,
   Keyboard,
   TextField,
-} from "components/common"
+} from "@/components/common"
 import {
   Employee,
   EmployeeFilterInput,
   EmployeeRecordCreateInput,
   EmployeesQuery,
-} from "lib/generated/graphql"
+} from "@/lib/generated/graphql"
 
 export interface SerialInputBoardProps {
   handleGetEmployees: (
