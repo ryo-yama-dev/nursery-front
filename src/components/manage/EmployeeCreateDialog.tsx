@@ -10,8 +10,8 @@ import {
   Select,
   MenuItem,
   TextField,
-} from "components/common"
-import { EmployeeCreateInput, Job, Sex } from "lib/generated/graphql"
+} from "@/components/common"
+import { EmployeeCreateInput, Job, Sex } from "@/lib/generated/graphql"
 
 export interface EmployeeCreateDialogProps {
   isOpen: boolean
@@ -77,7 +77,9 @@ export const EmployeeCreateDialog = ({
           />
           <Select
             value={jobId}
-            onChange={(e) => setJobId(Number(e.target.value))}
+            onChange={(e: { target: { value: any } }) =>
+              setJobId(Number(e.target.value))
+            }
             label="役職"
           >
             <MenuItem value={0}>

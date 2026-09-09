@@ -1,12 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { Key, useState } from "react"
 import Link from "next/link"
-import { useQuery } from "@apollo/client"
+import { useQuery } from "@apollo/client/react"
 import dayjs from "dayjs"
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material"
-import { Button, DailyRecord, DateList } from "components/common"
-import { employeesMonthly } from "lib/definitions"
+import { Button, DailyRecord, DateList } from "@/components/common"
+import { employeesMonthly } from "@/lib/definitions"
 
 /*
 TODO:
@@ -53,16 +53,18 @@ export default function ManagePage() {
           <p>日 \ 名</p>
           <DateList year={target.year()} month={target.month() + 1} />
         </div>
-        {data?.employeesMonthly.map(({ employee, records }, i) => (
-          <div key={i} className="flex flex-col px-2">
-            <Link href={`/employee/${employee.id}`}>
-              {employee.lastName} {employee.firstName}
-            </Link>
-            {records?.map((record, i) => (
-              <DailyRecord key={i} record={record} />
-            ))}
-          </div>
-        ))}
+        {data?.employeesMonthly.map(
+          ({ employee, records }, i: Key | null | undefined) => (
+            <div key={i} className="flex flex-col px-2">
+              <Link href={`/employee/${employee.id}`}>
+                {employee.lastName} {employee.firstName}
+              </Link>
+              {records?.map((record, i: Key | null | undefined) => (
+                <DailyRecord key={i} record={record} />
+              ))}
+            </div>
+          ),
+        )}
       </div>
     </div>
   )

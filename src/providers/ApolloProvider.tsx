@@ -1,13 +1,11 @@
 "use client"
 
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider as Provider,
-} from "@apollo/client"
+import { ApolloClient, InMemoryCache } from "@apollo/client"
+import { ApolloProvider as Provider } from "@apollo/client/react"
+import { HttpLink } from "@apollo/client/link/http"
 
 const client = new ApolloClient({
-  uri: `http://localhost:8080/graphql`,
+  link: new HttpLink({ uri: `http://localhost:8080/graphql` }),
   cache: new InMemoryCache(),
 })
 

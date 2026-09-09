@@ -1,4 +1,4 @@
-import { graphql } from "lib/generated"
+import { graphql } from "@/lib/generated"
 
 export const employeeRecordCreate = graphql(`
   mutation EmployeeRecordCreate($input: EmployeeRecordCreateInput!) {
