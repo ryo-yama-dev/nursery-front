@@ -2,7 +2,7 @@
 
 import { Key, useState } from "react"
 import Link from "next/link"
-import { useQuery } from "@apollo/client"
+import { useQuery } from "@apollo/client/react"
 import dayjs from "dayjs"
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material"
 import { Button, DailyRecord, DateList } from "@/components/common"

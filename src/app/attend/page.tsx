@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState, useCallback } from "react"
-import { useMutation, useLazyQuery } from "@apollo/client"
+import { useMutation, useLazyQuery } from "@apollo/client/react"
 import dayjs from "dayjs"
 import { Button } from "@/components/common"
 import { SerialInputBoard } from "@/components/attend"

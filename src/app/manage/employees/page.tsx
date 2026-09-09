@@ -1,7 +1,7 @@
 "use client"
 
 import { useCallback, useState } from "react"
-import { useQuery, useMutation } from "@apollo/client"
+import { useQuery, useMutation } from "@apollo/client/react"
 import {
   Button,
   Paper,
